@@ -56,11 +56,16 @@ def VerificarVencedor():
         )
     ):
             print(f'{tabuleiro[1][1]} GANHOU!!!')
-            return True
-            
+            return True           
     return False
 
-
+def Empate():
+    for linha in range(3):
+        for coluna in range(3):
+            if tabuleiro[linha][coluna] == ' ':
+                return False
+    print('Empate')
+    return True
 
 
 
@@ -75,10 +80,8 @@ while True:
     except ValueError:
         print('Os valores devem ser números inteiros!')
     ExibeTabuleiro()
-    if VerificarVencedor():
+    if VerificarVencedor() or Empate():
         break
+   
 
-#Jogador = jogada(1,1)
-#Jogador = jogada(2,1)
-#ExibeTabuleiro()
 
