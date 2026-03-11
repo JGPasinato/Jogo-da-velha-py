@@ -1,6 +1,6 @@
 tabuleiro = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 
-Jogador = "X"
+jogador = "X"
 
 
 
@@ -10,16 +10,62 @@ def ExibeTabuleiro():
         print('-' * 6)
 
 
-def jogada(linha,coluna):
-    if tabuleiro[linha][coluna] != ' ':
-        print('jogada invalida')
-        return Jogador
-    tabuleiro[linha][coluna] = Jogador
-    return 'O' if Jogador == 'X' else  'X'
+def jogada(linha, coluna):
+    if (
+        not 0 <= linha <= 2 or 
+        not 0 <= coluna <= 2 or 
+        tabuleiro[linha][coluna] != ' '
+    ):
+        print('Jogada inválida!')
+        return jogador
+    tabuleiro[linha][coluna] = jogador
+    return 'O' if jogador == 'X' else 'X'
  
+def VerificarVencedor():
+    for linha in range(3):
+        if(
+        tabuleiro[linha][0] != ' ' and    
+        tabuleiro[linha][0] == tabuleiro[linha][1] and
+        tabuleiro[linha][0] ==  tabuleiro[linha][2]
+            
+        ):
+            print(f'{tabuleiro[linha][0]}Ganhou')
+            return True
+    
+    for coluna in range(3):
+        if(
+        tabuleiro[0][coluna] != ' ' and    
+        tabuleiro[0][coluna] == tabuleiro[1][coluna] and
+        tabuleiro[0][coluna] ==  tabuleiro[2][coluna]
+            
+        ):
+            print(f'{tabuleiro[0][coluna]}Ganhou')
+            return True
+    
+    if (
+        tabuleiro[1][1] != ' ' and
+        (
+            (
+                tabuleiro[0][0] == tabuleiro[1][1] and
+                tabuleiro[0][0] == tabuleiro[2][2]
+            ) or
+            (
+                tabuleiro[0][2] == tabuleiro[1][1] and
+                tabuleiro[1][1] == tabuleiro[2][0]
+            )
+        )
+    ):
+            print(f'{tabuleiro[1][1]} GANHOU!!!')
+            return True
+            
+    return False
+
+
+
+
 
 while True: 
-    print(f'jogador da vez: {Jogador}')
+    print(f'jogador da vez: {jogador}')
     try:
         linha = int(input('Digite a linha: '))
         coluna = int(input('Digite a coluna: '))
@@ -29,7 +75,8 @@ while True:
     except ValueError:
         print('Os valores devem ser números inteiros!')
     ExibeTabuleiro()
-
+    if VerificarVencedor():
+        break
 
 #Jogador = jogada(1,1)
 #Jogador = jogada(2,1)
